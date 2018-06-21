@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+from selenium import webdriver
+driver = webdriver.Chrome(executable_path='D:\Git\my_first_test\env\Scripts\chromedriver.exe')
+
 from selenium.webdriver.common.action_chains import ActionChains
 import time, unittest
 
@@ -13,11 +13,9 @@ def is_alert_present(wd):
     except:
         return False
 
-
-
 class test_add_film(unittest.TestCase):
     def setUp(self):
-        self.wd = WebDriver()
+        self.wd = webdriver.Chrome('D:\Git\my_first_test\env\Scripts\chromedriver.exe')
         self.wd.implicitly_wait(60)
 
     def test_test_add_film(self):
@@ -38,18 +36,14 @@ class test_add_film(unittest.TestCase):
         wd.find_element_by_id("filmyear").click()
         wd.find_element_by_id("filmyear").clear()
         wd.find_element_by_id("filmyear").send_keys("2009")
-        multiselect_genres = (By.XPATH, '//*[@class="panel-heading"][text()="Жанры"]/..//input')
+        wd.find_element_by_xpath("//div[@class='ember-power-select-trigger ember-power-select-multiple-trigger@']").click()
+        wd.find_element_by_xpath("//li[@data-selected-index='5']").click()
+        wd.find_element_by_xpath("//li[@data-selected-index='4']").click()
 
         ##if not wd.find_element_by_id("nolimit").is_selected():
         ##    wd.find_element_by_id("nolimit").click()
         wd.find_element_by_xpath("//form[@id='ember1085']//button[.='Сохранить']").click()
         self.assertTrue(success)
-def choose_genres(self, genres):
-            self.app.wd.find_element(*self.multiselect_genres).clear()
-            for genre in genres:
-                self.app.wd.find_element(*multiselect_genres).send_keys(genre)
-                self.app.wd.find_element(*multiselect_genres).send_keys(Keys.RETURN)
-
 
     def athorization(self, wd):
         wd.find_element_by_id("ember444").click()
